@@ -151,12 +151,12 @@ int numberCheck(int number, int row, int column) {
 //Uses recursion to solve if the number 1-9 fit the puzzle
 int sudokoSolver (int row, int column){
     //If the row is 8 and column is 8, we have reached the end
-    if (row == 8 && column == 8){
+    if (row == 8 && column == 9){
         return 1;
     }
     //If the column is 8, then we have reached the end of the column,
     //Increment the row and start traversing through that
-    if (column == 8){
+    if (column == 9){
         row++;
         column=0;
     }
@@ -206,6 +206,7 @@ void writeSolution (int board[9][9]){
 
 //Print the current board
 void printBoard(int board[9][9]) {
+    
      for (int i = 0; i < 9; i++) {
          for (int j = 0; j < 9; j++){
             printf("%d ", board[i][j]);
@@ -216,27 +217,21 @@ void printBoard(int board[9][9]) {
 
 int main (int argc, char *argv[]){
     //Get the puzzle to solve from the text file
+    printf("\nThe unsolved sudoko puzzle is: \n");
     getPuzzle();
     printBoard(board);
     
     //Create 11 threads
+    int counter = 1;
     pthread_t tid[11];
- 
+    
+    //If sudokoSolver returns true, then the solution is correct
     if (sudokoSolver(0, 0)){
-        printf("\n");
+        printf("\nThe solved sudoko puzzle is: \n");
         printBoard(board);
         writeSolution(board);
     }
-
-    else {
-        printf("NOT WORKING");
-    }
-
-    /*pthread_create(&tid[0], NULL, columnOnly, NULL);
-    pthread_join(tid[0], NULL);
-    */
-
-    /*
+    
     //11 threads
     for (int thread = 1; thread <= 11; thread++)
         //Thread 1 is used to check if each column contains digit 1 to 9.
@@ -271,10 +266,20 @@ int main (int argc, char *argv[]){
                 thread++;
             }
         }
+    
+    //If one of the values from the validation array is 0, then the solution is invalid
+    for (int i=1; i<11; i++){
+        if (valid[i] != 1)
+            printf("\nThe solution is invalid \n\n");
+        else 
+            counter++;
+    }
 
-    for (int i=0; i<11; i++)
-        printf("%d", valid[i]);
-    */    
+    //All the threads are valid
+    if (counter == 11) {
+        printf("\nThe Solution is valid\n\n");
+    }
+      
     return(0);
 }
 
