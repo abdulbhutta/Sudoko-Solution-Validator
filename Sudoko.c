@@ -84,7 +84,7 @@ void *validateSubgrid (void *parameter){
             else {
                 valid[subgridThread] = 0;
                 subgridThread++;
-                printf("invalid \n");
+                //printf("invalid \n");
                 pthread_exit(0);
             }
         }
@@ -161,7 +161,7 @@ int sudokoSolver (int row, int column){
         column=0;
     }
 
-    //If the vallue of the current number is 1 - 9, then proceed to the next number
+    //If the value of the current number is 1 - 9, then proceed to the next number
     if (board[row][column] > 0 && board[row][column] <= 9){
         return sudokoSolver(row, column + 1);
     }
@@ -208,16 +208,17 @@ void writeSolution (int board[9][9]){
 void printBoard(int board[9][9]) {
     
      for (int i = 0; i < 9; i++) {
-         for (int j = 0; j < 9; j++){
-            printf("%d ", board[i][j]);
-         }
+        printf("     ");
+        for (int j = 0; j < 9; j++){
+        printf("%d ", board[i][j]);
+        }
             printf("\n");
        }
 }
 
 int main (int argc, char *argv[]){
     //Get the puzzle to solve from the text file
-    printf("\nThe unsolved sudoko puzzle is: \n");
+    printf("\nThe unsolved sudoko puzzle is: \n\n");
     getPuzzle();
     printBoard(board);
     
@@ -227,7 +228,7 @@ int main (int argc, char *argv[]){
     
     //If sudokoSolver returns true, then the solution is correct
     if (sudokoSolver(0, 0)){
-        printf("\nThe solved sudoko puzzle is: \n");
+        printf("\nThe solved sudoko puzzle is: \n\n");
         printBoard(board);
         writeSolution(board);
     }
@@ -269,15 +270,20 @@ int main (int argc, char *argv[]){
     
     //If one of the values from the validation array is 0, then the solution is invalid
     for (int i=1; i<11; i++){
-        if (valid[i] != 1)
-            printf("\nThe solution is invalid \n\n");
+        if (valid[i] != 1){
+
+        }
         else 
             counter++;
     }
 
     //All the threads are valid
     if (counter == 11) {
-        printf("\nThe Solution is valid\n\n");
+        printf("\nThe Solution is valid!\n\n");
+    }
+
+    else {
+        printf("\nThe solution is invalid!\n\n");
     }
       
     return(0);
