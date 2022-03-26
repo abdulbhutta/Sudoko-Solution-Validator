@@ -4,10 +4,10 @@ LFLAGS =
 LIBS = 
 SOURCES = Sudoko.c 
 OBJECTS = $(subst .c,.o,$(SOURCES))
-EXE = sudoko.exe
+EXE = 
 .PHONY: clean help
 
-sudoko.exe :
+sudoko : sudoko.c
 	$(CC) $(CFLAGS) $^ $(LIBS) -o $@ 
 
 %.o : %.c
